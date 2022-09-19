@@ -1,0 +1,111 @@
+// const urlcategories = "https://upayments-studycase-api.herokuapp.com/api/categories/"
+  // fetch(urlcategories, {
+  //   method: 'GET',
+  //   mode: 'cors',
+  //   headers: new Headers({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZ2htYXJlbWFoZXNoMTIzQGdtYWlsLmNvbSIsImdpdGh1YiI6Imh0dHBzOi8vZ2l0aHViLmNvbS9NYXgtUmVwb3MiLCJpYXQiOjE2NjMzMjc1MzIsImV4cCI6MTY2Mzc1OTUzMn0._swzVWnoJGN6j8bR5wL51_NUjllxVmPYGqIWuUIm9LQ',
+  //     'Host': 'upayments-studycase-api.herokuapp.com'
+  //   })
+  // }).then((e)=>{
+  //   return e.json();
+  // }).then((e)=> console.log(e));
+  const [prod,setProd] = useState([]);
+  
+  const funcProduct = async () => {
+    const urlProduct = "https://upayments-studycase-api.herokuapp.com/api/products";
+
+    const res = await fetch(urlProduct, {
+      method: "GET",
+      mode: "cors",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZ2htYXJlbWFoZXNoMTIzQGdtYWlsLmNvbSIsImdpdGh1YiI6Imh0dHBzOi8vZ2l0aHViLmNvbS9NYXgtUmVwb3MiLCJpYXQiOjE2NjMzMjc1MzIsImV4cCI6MTY2Mzc1OTUzMn0._swzVWnoJGN6j8bR5wL51_NUjllxVmPYGqIWuUIm9LQ",
+          Host: "upayments-studycase-api.herokuapp.com"
+      })
+    });
+    
+    const data = await res.json();
+    const product = data.products;
+    // console.log(product[0].avatar);
+    setProd(product);
+  };
+  
+  
+  const funcCategories = async () => {
+    const urlcategories =
+    "https://upayments-studycase-api.herokuapp.com/api/categories/";
+    const res = await fetch(urlcategories, {
+      method: "GET",
+      mode: "cors",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZ2htYXJlbWFoZXNoMTIzQGdtYWlsLmNvbSIsImdpdGh1YiI6Imh0dHBzOi8vZ2l0aHViLmNvbS9NYXgtUmVwb3MiLCJpYXQiOjE2NjMzMjc1MzIsImV4cCI6MTY2Mzc1OTUzMn0._swzVWnoJGN6j8bR5wL51_NUjllxVmPYGqIWuUIm9LQ",
+          Host: "upayments-studycase-api.herokuapp.com"
+        })
+      });
+      const data = await res.json();
+      const categories = data.categories;
+      console.log(categories);
+  };
+  
+  useEffect(() => {
+    funcProduct();
+    funcCategories();
+  },[])
+  
+  console.log(prod)
+  return (
+    
+    <div className="App">
+      
+      <div className="wrapper">
+      {prod.map((val)=>{
+        return(
+          <>
+          <section className="product">
+	<div className="product__photo">
+		<div className="photo-container">
+			<div className="photo-main">
+				<div className="controls">
+					<i className="material-icons">share</i>
+					<i className="material-icons">favorite_border</i>
+				</div>
+				<img src={val.avatar} alt="green apple slice"/>
+			</div>
+			
+		</div>
+	</div>
+	<div className="product__info">
+		<div className="title">
+			<h1>{val.name}</h1>
+			<span>COD: 45999</span>
+		</div>
+		<div className="price">
+			R$ <span>{val.price}</span>
+		</div>
+		
+		<div className="description">
+			<h3>BENEFITS</h3>
+			<ul>
+				<li>Apples are nutricious</li>
+				<li>Apples may be good for weight loss</li>
+				<li>Apples may be good for bone health</li>
+				<li>They're linked to a lowest risk of diabetes</li>
+			</ul>
+		</div>
+		<button className="buy--btn">ADD TO CART</button>
+	</div>
+</section>
+          </>
+        )
+      })}
+
+</div>
+
+      <h2>Start editing to see some magic happen!</h2>
+    </div>
+  );
+  
